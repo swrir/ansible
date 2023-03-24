@@ -1,0 +1,41 @@
+#1)웹 패키지 설치 및 기동
+  #)httpd 패키지 설치
+  #)httpd 서비스 기동
+    #2)방화벽 패키지 설치 및 기동,서비스 등록
+     #)방화벽 설치 및 서비스 기도
+     #import_playbook 사용
+       # import_taks, include_taks 사용
+      #3)웹 서비스 등록 - http,https
+       #4)클라이언트에서 웹 요청 테스트
+       #import_playbook 사용
+       # import_taks, include_taks 사용
+---
+- name: Configure web server
+  hosts: webservers
+
+  tasks:
+    - name: Include the environment task file and set the variables
+      include_tasks: tasks/environment.yml
+      vars:
+        package: httpd
+        service: httpd
+      when: ansible_os_family == 'RedHat'
+
+    - name: Import the firewall task file and set the variables
+      import_tasks: tasks/firewall.yml
+      vars:
+        firewall_pkg: firewalld
+        firewall_svc: firewalld
+        rule:
+          - http
+          - https
+
+    - name: Import the placeholder task file and set the variables
+      import_tasks: tasks/placeholder.yml
+      vars:
+        file: /var/www/html/index.html
+
+- name: Import test play file and set the variable
+  import_playbook: plays/test.yml
+  vars:
+    url: "http://ansible1.example.com"

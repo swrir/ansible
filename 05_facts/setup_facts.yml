@@ -1,0 +1,16 @@
+---
+- name:
+ hosts:
+  tasks:
+        remote_dir: /etc/ansible/facts.d/
+        facts_file: custom.fact
+  #1) /etc/ansible/facts.d/    
+  #2) custom.fact 
+
+  #1)/etc/ansible/facts.d 
+  -name: Create the remote directory
+  file:
+        state: directory
+        recurse: yes
+        path: "{{ remote_dir }}"
+   #2) custom.fact and

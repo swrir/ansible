@@ -1,0 +1,8 @@
+---
+-name: 패키지 설치 - {4 pkg_webs )}
+yum:
+name: "(f pkg webs }}" state: latest
+eW
+- name: 서비스 기동 - ({ svc web )}
+service:
+name: "[( svc_web }]" state: started enabled: ves
